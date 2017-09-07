@@ -1,0 +1,42 @@
+.set-detail-component {
+
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    border: solid 1px #DDD;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    flex-basis: 350px;
+    margin: 5px 2%;
+    padding: 50px 20px;
+    position: relative;
+    text-align: center;
+
+    .front, .back {
+      font-size: 1.4em;
+      margin: 15px 0;
+    }
+
+    .stats {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  .front {
+    margin: 5px 0;
+  }
+
+  .controls {
+    margin-top: 50px;
+  }
+
+  .controls li {
+    margin: 10px 0;
+  }
+}
