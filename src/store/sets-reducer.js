@@ -7,6 +7,7 @@ const initialState = {
   setEditDescription: ''
 }
 
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.LOAD_SETS:
@@ -23,6 +24,9 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { list: copy, sortSetsBy: action.sort });
     default:
       return state;
+    case constants.DELETE_SINGLE_CARD:
+    fetch
+      return Object.assign({}, state, { list: action.card })
   }
 }
 

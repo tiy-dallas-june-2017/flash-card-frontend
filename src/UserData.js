@@ -85,6 +85,15 @@ let UserData = {
     .then(() => UserData.loadSets(cb));
   },
 
+  deleteSingleCard: (setId, cardId, cb) => {
+
+    fetch(`${URL}/api/sets/${setId}/card/${cardId}`, {
+      method: 'PUT'
+    })
+    .then(() => cb());
+
+  },
+
 
   incrementIncorrectCountOnCard: (setId, cardId) => {
     var set = userData.sets.find((x) => { return x.id === setId });
