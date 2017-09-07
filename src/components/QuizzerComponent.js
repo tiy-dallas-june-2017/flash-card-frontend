@@ -12,7 +12,7 @@ const CardNavigation = (props) => {
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
       <div className="incorrect" onClick={() => { props.markIncorrect(props.currentCard);} }>Incorrect</div>
       <div className="skip" onClick={props.skip}>Skip</div>
-      <div className='quit-quiz' onClick={() => {props.quitQuiz(props.currentCard)}}>Quit Quiz</div>
+      <div className='quit-quiz' onClick={props.quitQuiz}>Quit Quiz</div>
     </div>
   );
 }
@@ -114,13 +114,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     skip: () => {
-      console.log('skip');
       const action = { type: 'SKIP_CARD' };
       dispatch(action);
     },
 
     quitQuiz: () => {
-      console.log('quit');
+      ownProps.history.push('/');
     },
 
     getSet: () => {
