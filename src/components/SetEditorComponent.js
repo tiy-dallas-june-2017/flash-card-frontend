@@ -18,8 +18,12 @@ class SetEditorComponent extends React.Component {
   editSet = (evt, setId) => {
     evt.preventDefault();
     console.log('editing set with the id of', setId);
-    const cb = () => this.props.history.goBack();
+    const cb = () => {
+      this.props.updateData();
+      this.props.history.goBack();
+    };
     UserData.editSet(setId, this.nameInput.value, this.descriptionInput.value, cb);
+    this.props.updateData(setId);
   }
 
   render() {
@@ -32,19 +36,19 @@ class SetEditorComponent extends React.Component {
       <h2>Set Editor</h2>
 
       <form onSubmit={isEditing ?
-        (evt) => { this.props.editSetFunction(evt, setId) } :
+        (evt) => { this.editSet(evt, setId) } :
         (evt) => { this.submitSet(evt) }}>
 
         <input
           placeholder="name"
           ref={(input) => { this.nameInput = input; }}
-          onChange={(evt) => this.props.changeInput(evt, 'name')}
+          onChange={(evt) => this.props.changeInput(evt, 'name', setId)}
           value={this.props.editSet.name} />
 
         <input
           placeholder="description"
           ref={(input) => { this.descriptionInput = input; }}
-          onChange={(evt) => this.props.changeInput(evt, 'description')}
+          onChange={(evt) => this.props.changeInput(evt, 'description', setId)}
           value={this.props.editSet.description} />
 
         <button>{isEditing ? 'Update' : 'Create'}</button>
@@ -62,8 +66,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeInput: (evt, fieldName) => {
-      const action = { type: constants.CHANGE_INPUT, fieldName, value: evt.target.value };
+    changeInput: (evt, fieldName, setId) => {
+      const action = { type: constants.CHANGE_INPUT, fieldName, value: evt.target.value, id: setId };
       console.log(action);
       dispatch(action);
     },
@@ -71,9 +75,12 @@ const mapDispatchToProps = (dispatch) => {
       evt.preventDefault();
       console.log('clicked');
       console.log('editing set with the id of', setId);
-      const cb = () => console.log('hello from the callback');
-      UserData.editSet(setId, 'title', 'description', cb);
-      const action = { type: constants.ADD_EDIT_SET,  }
+      const action = { type: 'EDIT_SET', setId }
+    },
+    updateData: (setId) => {
+      console.log('UPDATE DATA');
+      const action = { type: 'UPDATE_DATA', id: setId };
+      dispatch(action);
     }
   }
 }

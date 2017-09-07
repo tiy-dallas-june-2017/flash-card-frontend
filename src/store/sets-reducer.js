@@ -5,7 +5,7 @@ const initialState = {
   sortSetsBy: 'name',
   setEditName: '',
   setEditDescription: '',
-  editSet: { id: '', description: '', name: '', cards: [] }
+  editSet: { id: '', description: '', name: '', cards: [] },
 }
 
 const reducer = (state = initialState, action) => {
@@ -26,9 +26,13 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editSet: action.set });
     case constants.CHANGE_INPUT:
       const fieldName = action.fieldName;
-      const updateObject = {};
+      const updateObject = { editSet: { id: action.id } };
       updateObject[fieldName] = action.value;
-      return Object.assign({}, state, { editSet: updateObject })
+      return Object.assign({}, state, { editSet: updateObject });
+    case 'UPDATE_DATA':
+      console.log('HELLO FROM UPDATE DATA');
+      const emptyEditObj = { description: '', name: '', cards: [] }
+      return Object.assign({}, state, { editSet: emptyEditObj });
     default:
       return state;
   }

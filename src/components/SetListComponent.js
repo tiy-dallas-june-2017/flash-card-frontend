@@ -12,6 +12,7 @@ class SetListVisual extends React.Component {
   }
 
   render() {
+    console.log('LIST', this.props.sets);
 
     var noSetsMessaging;
     if (this.props.sets.length === 0) {
@@ -53,13 +54,12 @@ class SetListVisual extends React.Component {
 
 }
 
-
-
-
 const mapStateToProps = (state) => {
   return {
     sets: state.sets.list,
-    sortBy: state.sets.sortSetsBy
+    sortBy: state.sets.sortSetsBy,
+    editSet: state.sets.editSet,
+    forceRerender: state.forceRerender,
   }
 }
 
@@ -68,10 +68,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     sortByName: () => dispatch({ type: constants.CHANGE_SORT, sort: 'name' }),
     sortByCardCount: () => dispatch({ type: constants.CHANGE_SORT, sort: 'cardCount' }),
     loadSets: () => {
+      console.log('LOAD SETS');
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
     },
     addEditSet: (set) => {
-      const action = { type: 'ADD_EDIT_SET', set }
+      const action = { type: 'ADD_EDIT_SET', set };
+      console.log('action=====================', action);
       dispatch(action);
     },
     editSet: (setId) => {
