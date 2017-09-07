@@ -8,6 +8,7 @@ const initialState = {
   editSet: { id: '', description: '', name: '', cards: [] },
 }
 
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.LOAD_SETS:
@@ -35,6 +36,9 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editSet: emptyEditObj });
     default:
       return state;
+    case constants.DELETE_SINGLE_CARD:
+    fetch
+      return Object.assign({}, state, { list: action.card })
   }
 }
 
