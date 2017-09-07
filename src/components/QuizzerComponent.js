@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 
 
 const CardNavigation = (props) => {
+  console.log('yo', props)
   return (
     <div className="card-navigation">
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
       <div className="incorrect" onClick={() => { props.markIncorrect(props.currentCard);} }>Incorrect</div>
       <div className="skip" onClick={props.skip}>Skip</div>
-      <div className='quit-quiz' onClick={() => {props.quitQuiz(props.currentCard)}}>Quit Quiz</div>
+      <div className='quit-quiz' onClick={() => {props.backToSetList()}}>Quit Quiz</div>
     </div>
   );
 }
@@ -65,6 +66,7 @@ class QuizzerVisual extends React.Component {
         markIncorrect={this.props.markIncorrect}
         skip={this.props.skip}
         quitQuiz={this.props.quitQuiz}
+        backToSetList={this.props.backToSetLists}
         />
     }
     else {
@@ -120,8 +122,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     quitQuiz: () => {
-      console.log('quit');
+      const action = { type: 'QUIT'};
+      dispatch(action);
     },
+    backToSetList() {
+      this.props.history.push('/');
+    },
+
 
     getSet: () => {
       const cb = (set) => {

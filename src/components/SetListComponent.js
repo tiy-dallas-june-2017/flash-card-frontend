@@ -65,13 +65,6 @@ class SetListVisual extends React.Component {
 
 }
 
-
-
-
-
-
-
-
 const mapStateToProps = (state) => {
   return {
     sets: state.sets.list,
