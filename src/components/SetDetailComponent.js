@@ -9,8 +9,15 @@ class SetDetailVisual extends React.Component {
     this.props.getSet();
   }
 
+  deleteSingleCard(card, setId) {
+    const cb = this.props.history.goBack();
+    const cardId = card.id;
+    UserData.deleteSingleCard(setId, cardId, cb)
+  }
+
   render() {
     let currentSet = this.props.sets.list.find((x) => x.id === this.props.match.params.setId);
+    const setId = this.props.match.params.setId;
 
     if (currentSet === undefined) {
       return <div>No set</div>
@@ -28,6 +35,7 @@ class SetDetailVisual extends React.Component {
             <div className="back">{card.back}</div>
             <button>Edit</button>
             <div className="stats">Correct: {card.correctCount} Incorrect: {card.incorrectCount}</div>
+            <button onClick={() => this.deleteSingleCard(card, setId)}>DESTROY</button>
           </li>
         })}
       </ul>;
@@ -69,6 +77,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getSet: () => {
       UserData.getSet(ownProps.match.params.setId);
+    },
+    deleteSingleCard: () => {
+        console.log('at dispatchtoprops delete card');
+        UserData.deleteSingleCard(ownProps.match.params.cardId);
     }
   }
 }

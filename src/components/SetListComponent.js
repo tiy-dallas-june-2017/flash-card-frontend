@@ -12,7 +12,6 @@ class SetListVisual extends React.Component {
   }
 
   render() {
-
     var noSetsMessaging;
     if (this.props.sets.length === 0) {
       noSetsMessaging = <p>You do not have any sets! Create one.</p>
@@ -42,8 +41,13 @@ class SetListVisual extends React.Component {
             <Link className="button edit-set" to={`/set/${set.id}/edit`}>edit</Link>
             <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
             <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
-            <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
-
+            {this.props.sets.map((set, index) => {
+              if (set.cards.length === 0) {
+                return <p>poop</p>
+              } else {
+                return <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
+              }
+            })}
           </li>
         })}
         </ul>
@@ -52,6 +56,10 @@ class SetListVisual extends React.Component {
   }
 
 }
+
+
+
+
 
 
 
