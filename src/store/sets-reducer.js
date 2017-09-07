@@ -4,7 +4,8 @@ const initialState = {
   list: [],
   sortSetsBy: 'name',
   setEditName: '',
-  setEditDescription: ''
+  setEditDescription: '',
+  editSet: { id: '', description: '', name: '', cards: [] }
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +22,13 @@ const reducer = (state = initialState, action) => {
         copy.sort((a, b) => { return a.cards.length < b.cards.length; });
       }
       return Object.assign({}, state, { list: copy, sortSetsBy: action.sort });
+    case constants.ADD_EDIT_SET:
+      return Object.assign({}, state, { editSet: action.set });
+    case constants.CHANGE_INPUT:
+      const fieldName = action.fieldName;
+      const updateObject = {};
+      updateObject[fieldName] = action.value;
+      return Object.assign({}, state, { editSet: updateObject })
     default:
       return state;
   }

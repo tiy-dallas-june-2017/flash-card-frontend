@@ -11,7 +11,7 @@ const CardNavigation = (props) => {
     <div className="card-navigation">
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
       <div className="incorrect" onClick={() => { props.markIncorrect(props.currentCard);} }>Incorrect</div>
-      <div className="skip">Skip</div>
+      <div className="skip" onClick={props.skip}>Skip</div>
 
     </div>
   );
@@ -118,6 +118,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       };
 
       UserData.getSet(ownProps.match.params.setId, cb);
+    },
+
+    skip: () => {
+      const action = { type: 'SKIP_QUESTION' };
+      dispatch(action);
     }
   }
 }

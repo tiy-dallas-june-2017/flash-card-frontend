@@ -39,7 +39,7 @@ class SetListVisual extends React.Component {
             <div className="number-of-cards"># of cards: {set.cards.length}</div>
             <p>{set.description}</p>
 
-            <Link className="button edit-set" to={`/set/${set.id}/edit`}>edit</Link>
+            <Link className="button edit-set" onClick={() => this.props.addEditSet(set)} to={`/set/${set.id}/edit`}>edit</Link>
             <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
             <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
             <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
@@ -69,6 +69,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     sortByCardCount: () => dispatch({ type: constants.CHANGE_SORT, sort: 'cardCount' }),
     loadSets: () => {
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
+    },
+    addEditSet: (set) => {
+      const action = { type: 'ADD_EDIT_SET', set }
+      dispatch(action);
     },
     editSet: (setId) => {
       UserData.editSet((data) => dispatch({ type: constants.EDIT_SET, sets: data.sets }))
