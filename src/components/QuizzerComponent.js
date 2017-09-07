@@ -130,6 +130,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       };
 
       UserData.getSet(ownProps.match.params.setId, cb);
+    },
+
+    skip: () => {
+      const action = { type: 'SKIP_QUESTION' };
+      dispatch(action);
     }
   }
 }

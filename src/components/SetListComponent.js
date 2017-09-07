@@ -32,7 +32,6 @@ class SetListVisual extends React.Component {
 
         <ul>
         {this.props.sets.map((set, index) => {
-          console.log('set', set);
           if (set.cards.length !== 0) {
             return (
               <li key={set.id} className="set">
@@ -65,17 +64,12 @@ class SetListVisual extends React.Component {
 
 }
 
-
-
-
-
-
-
-
 const mapStateToProps = (state) => {
   return {
     sets: state.sets.list,
-    sortBy: state.sets.sortSetsBy
+    sortBy: state.sets.sortSetsBy,
+    editSet: state.sets.editSet,
+    forceRerender: state.forceRerender,
   }
 }
 
@@ -84,7 +78,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     sortByName: () => dispatch({ type: constants.CHANGE_SORT, sort: 'name' }),
     sortByCardCount: () => dispatch({ type: constants.CHANGE_SORT, sort: 'cardCount' }),
     loadSets: () => {
+      console.log('LOAD SETS');
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
+    },
+    addEditSet: (set) => {
+      const action = { type: 'ADD_EDIT_SET', set };
+      console.log('action=====================', action);
+      dispatch(action);
     },
     editSet: (setId) => {
       UserData.editSet((data) => dispatch({ type: constants.EDIT_SET, sets: data.sets }))
