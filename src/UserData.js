@@ -56,10 +56,21 @@ let UserData = {
     .then(() => cb());
   },
 
-  editSet: (setId, cb) => {
+  editSet(setId, name, description, cb) {
 
-    console.log('hello', setId, cb);
+    const url = `${URL}/api/sets/${setId}`;
+    const newObject = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        description
+      })
+    };
 
+    fetch(url, newObject).then(cb());
   },
 
   deleteSet: (setId, cb) => {
