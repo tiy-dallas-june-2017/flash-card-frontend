@@ -38,6 +38,7 @@ class SetListVisual extends React.Component {
             <div className="number-of-cards"># of cards: {set.cards.length}</div>
             <p>{set.description}</p>
 
+            <Link className="button edit-set" to={`/set/${set.id}/edit`}>edit</Link>
             <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
             <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
             {this.props.sets.map((set, index) => {
@@ -76,6 +77,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     sortByCardCount: () => dispatch({ type: constants.CHANGE_SORT, sort: 'cardCount' }),
     loadSets: () => {
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
+    },
+    editSet: (setId) => {
+      UserData.editSet((data) => dispatch({ type: constants.EDIT_SET, sets: data.sets }))
     },
     deleteSet: (setId) => UserData.deleteSet(setId, () => {
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))

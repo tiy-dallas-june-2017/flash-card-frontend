@@ -41,6 +41,8 @@ const reducer = (state = initialState, action) => {
         currentCard: state.currentCard + 1,
         skippedCount: state.skippedCount + 1
       });
+    case constants.SKIP_CARD:
+      return Object.assign({}, state, {currentCard: state.currentCard + 1, skippedCount: state.skippedCount + 1});
     default:
       return state;
   }
