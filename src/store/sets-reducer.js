@@ -27,12 +27,12 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editSet: action.set });
     case constants.CHANGE_INPUT:
       const fieldName = action.fieldName;
-      const updateObject = { editSet: { id: action.id } };
+      const updateObject = { id: action.id };
       updateObject[fieldName] = action.value;
-      return Object.assign({}, state, { editSet: updateObject });
+      return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
     case 'UPDATE_DATA':
       console.log('HELLO FROM UPDATE DATA');
-      const emptyEditObj = { description: '', name: '', cards: [] }
+      const emptyEditObj = { id: '', description: '', name: '', cards: [] }
       return Object.assign({}, state, { editSet: emptyEditObj });
     default:
       return state;

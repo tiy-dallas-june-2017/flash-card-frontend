@@ -119,6 +119,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     quitQuiz: () => {
+      console.log(ownProps);
       ownProps.history.push('/');
     },
 
