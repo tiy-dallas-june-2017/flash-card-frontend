@@ -11,8 +11,8 @@ const CardNavigation = (props) => {
     <div className="card-navigation">
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
       <div className="incorrect" onClick={() => { props.markIncorrect(props.currentCard);} }>Incorrect</div>
-      <div className="skip">Skip</div>
-
+      <div className="skip" onClick={props.skip}>Skip</div>
+      <div className='quit-quiz' onClick={() => {props.quitQuiz(props.currentCard)}}>Quit Quiz</div>
     </div>
   );
 }
@@ -63,7 +63,9 @@ class QuizzerVisual extends React.Component {
         currentCard={this.props.currentCard}
         markCorrect={this.props.markCorrect}
         markIncorrect={this.props.markIncorrect}
-        skip={this.props.skip} />
+        skip={this.props.skip}
+        quitQuiz={this.props.quitQuiz}
+        />
     }
     else {
       summary = <QuizSummaryComponent
@@ -109,6 +111,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     markIncorrect: (card) => {
       UserData.incrementIncorrectCountOnCard(ownProps.match.params.setId, card.id, () => {});
       dispatch({ type: constants.QUIZ_CARD_INCORRECT });
+    },
+
+    skip: () => {
+      console.log('skip');
+      const action = { type: 'SKIP_CARD' };
+      dispatch(action);
+    },
+
+    quitQuiz: () => {
+      console.log('quit');
     },
 
     getSet: () => {
