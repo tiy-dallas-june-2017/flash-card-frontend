@@ -26,6 +26,7 @@ class SetDetailVisual extends React.Component {
           return <li key={card.id} className="card">
             <div className="front">{card.front}</div>
             <div className="back">{card.back}</div>
+            <button>Edit</button>
             <div className="stats">Correct: {card.correctCount} Incorrect: {card.incorrectCount}</div>
           </li>
         })}

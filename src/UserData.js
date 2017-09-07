@@ -56,6 +56,12 @@ let UserData = {
     .then(() => cb());
   },
 
+  editSet: (setId, cb) => {
+
+    console.log('hello', setId, cb);
+
+  },
+
   deleteSet: (setId, cb) => {
 
     fetch(`${URL}/api/sets/${setId}`, {

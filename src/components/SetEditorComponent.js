@@ -3,7 +3,7 @@ import UserData from './../UserData.js';
 
 export default class SetEditorComponent extends React.Component {
 
-  submitSet(evt) {
+  submitSet = (evt) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();
     UserData.createSet(this.nameInput.value, this.descriptionInput.value, cb);
