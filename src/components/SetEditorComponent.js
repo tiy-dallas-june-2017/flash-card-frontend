@@ -9,10 +9,11 @@ class SetEditorComponent extends React.Component {
     super(props);
   }
 
-  submitSet = (evt) => {
+  submitSet = (evt, setId) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();
     UserData.createSet(this.nameInput.value, this.descriptionInput.value, cb);
+    this.props.updateData();
   }
 
   editSet = (evt, setId) => {
@@ -23,7 +24,7 @@ class SetEditorComponent extends React.Component {
       this.props.history.goBack();
     };
     UserData.editSet(setId, this.nameInput.value, this.descriptionInput.value, cb);
-    this.props.updateData(setId);
+    this.props.updateData();
   }
 
   render() {
@@ -37,7 +38,7 @@ class SetEditorComponent extends React.Component {
 
       <form onSubmit={isEditing ?
         (evt) => { this.editSet(evt, setId) } :
-        (evt) => { this.submitSet(evt) }}>
+        (evt) => { this.submitSet(evt, setId) }}>
 
         <input
           placeholder="name"
@@ -45,11 +46,11 @@ class SetEditorComponent extends React.Component {
           onChange={(evt) => this.props.changeInput(evt, 'name', setId)}
           value={this.props.editSet.name} />
 
-        <input
+        <textarea
           placeholder="description"
           ref={(input) => { this.descriptionInput = input; }}
           onChange={(evt) => this.props.changeInput(evt, 'description', setId)}
-          value={this.props.editSet.description} />
+          value={this.props.editSet.description}></textarea>
 
         <button>{isEditing ? 'Update' : 'Create'}</button>
       </form>
@@ -77,9 +78,9 @@ const mapDispatchToProps = (dispatch) => {
       console.log('editing set with the id of', setId);
       const action = { type: 'EDIT_SET', setId }
     },
-    updateData: (setId) => {
+    updateData: () => {
       console.log('UPDATE DATA');
-      const action = { type: 'UPDATE_DATA', id: setId };
+      const action = { type: 'UPDATE_DATA' };
       dispatch(action);
     }
   }
