@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 
 const CardNavigation = (props) => {
-  console.log('yo', props)
   return (
     <div className="card-navigation">
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
@@ -33,7 +32,14 @@ class QuizzerVisual extends React.Component {
     this.props.getSet();
   }
 
+  retakeQuiz() {
+    console.log('props', this.props);
+    this.props.getSet(this.props.match.params.setId);
+    // this.props.history.push('/set/' + this.props.match.params.setId + '/quizzer');
+  }
+
   backToSetList() {
+    console.log('props', this.props);
     this.props.history.push('/');
   }
 
@@ -66,7 +72,6 @@ class QuizzerVisual extends React.Component {
         markIncorrect={this.props.markIncorrect}
         skip={this.props.skip}
         quitQuiz={this.props.quitQuiz}
-        backToSetList={this.props.backToSetLists}
         />
     }
     else {
@@ -76,7 +81,7 @@ class QuizzerVisual extends React.Component {
         skipped={this.props.quizzer.skippedCount} />
 
       summaryNavigation = <div className="summary-choices">
-          <div>Quiz again</div>
+          <div onClick={() => this.retakeQuiz()}>Quiz again</div>
           <div onClick={() => this.backToSetList()}>Back to set list</div>
         </div>;
     }
@@ -123,7 +128,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     quitQuiz: () => {
       ownProps.history.push('/');
     },
-
 
     getSet: () => {
       const cb = (set) => {
