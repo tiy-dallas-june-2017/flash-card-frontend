@@ -47,7 +47,7 @@ class SetListVisual extends React.Component {
                   to={`/set/${set.id}/edit`}
                   onClick={() => this.props.addEditSet(set)}>edit</Link>
                 <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
-                <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
+                <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view Cards</div>
                 <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
               </li>
             )
