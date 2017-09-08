@@ -17,6 +17,7 @@ class SetListVisual extends React.Component {
       noSetsMessaging = <p>You do not have any sets! Create one.</p>
     }
 
+
     return (
       <div className="set-list">
         <h2>Set List</h2>
@@ -32,33 +33,21 @@ class SetListVisual extends React.Component {
 
         <ul>
         {this.props.sets.map((set, index) => {
-          if (set.cards.length !== 0) {
-            return (
-              <li key={set.id} className="set">
-                <div className="set-name">{set.name}</div>
-                <div className="number-of-cards"># of cards: {set.cards.length}</div>
-                <p>{set.description}</p>
-                <Link
-                  className="button edit-set"
-                  to={`/set/${set.id}/edit`}
-                  onClick={() => this.props.addEditSet(set)}>edit</Link>
-                <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
-                <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
-                <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
-              </li>
-            )
-          } else {
-            return (
-              <li key={set.id} className="set">
-                <div className="set-name">{set.name}</div>
-                <div className="number-of-cards"># of cards: {set.cards.length}</div>
-                <p>{set.description}</p>
-                <Link className="button edit-set" to={`/set/${set.id}/edit`}>edit</Link>
-                <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
-                <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
-              </li>
-            )
-          }
+          let quizButton = set.cards.length > 0 ? <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div> : null;
+          return (
+            <li key={set.id} className="set">
+              <div className="set-name">{set.name}</div>
+              <div className="number-of-cards"># of cards: {set.cards.length}</div>
+              <p>{set.description}</p>
+              <Link
+                className="button edit-set"
+                to={`/set/${set.id}/edit`}
+                onClick={() => this.props.addEditSet(set)}>edit</Link>
+              <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
+              <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
+              {quizButton}
+            </li>
+          )
         })}
         </ul>
       </div>

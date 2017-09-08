@@ -9,7 +9,7 @@ class SetEditorComponent extends React.Component {
     super(props);
   }
 
-  submitSet = (evt, setId) => {
+  submitSet = (evt) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();
     UserData.createSet(this.nameInput.value, this.descriptionInput.value, cb);
@@ -38,7 +38,7 @@ class SetEditorComponent extends React.Component {
 
       <form onSubmit={isEditing ?
         (evt) => { this.editSet(evt, setId) } :
-        (evt) => { this.submitSet(evt, setId) }}>
+        (evt) => { this.submitSet(evt) }}>
 
         <input
           placeholder="name"
