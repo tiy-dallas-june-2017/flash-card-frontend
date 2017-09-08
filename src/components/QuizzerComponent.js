@@ -121,15 +121,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     quitQuiz: () => {
-<<<<<<< HEAD
-      const action = { type: 'QUIT'};
-      dispatch(action);
-    },
-    backToSetList() {
-      this.props.history.push('/');
-=======
       ownProps.history.push('/');
->>>>>>> 4cc8fb748853876a67e72b586445a5572a4c1ce8
     },
 
 
