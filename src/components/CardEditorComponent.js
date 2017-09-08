@@ -17,9 +17,9 @@ export default class CardEditorComponent extends React.Component {
     evt.preventDefault();
 
     var cb = () => {
-      console.log("props?", this.props)
+      console.log("props?", this.props.match.params.setId)
       console.log("props set id", this.props.setId)
-      this.props.history.push(`/set/${this.props.setId}/newcard`);
+      this.props.history.push(`/set/${this.props.match.params.setId}/newcard`);
     };
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
   }
