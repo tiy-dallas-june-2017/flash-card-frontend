@@ -105,10 +105,16 @@ let UserData = {
 
   deleteSingleCard: (setId, cardId, cb) => {
 
-    fetch(`${URL}/api/sets/${setId}/card/${cardId}`, {
-      method: 'PUT'
-    })
-    .then(() => cb());
+    const url = `${URL}/api/sets/${setId}/card/${cardId}`;
+    const newObject = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    }
+
+    fetch(url, newObject).then(() => cb());
 
   },
 
