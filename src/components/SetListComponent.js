@@ -11,24 +11,28 @@ class SetListVisual extends React.Component {
     this.props.loadSets();
   }
 
+
   render() {
+    var noSetsSorting;
     var noSetsMessaging;
     if (this.props.sets.length === 0) {
       noSetsMessaging = <p>You do not have any sets! Create one.</p>
+      noSetsSorting = <p></p>
+    } else {
+      noSetsSorting = <div className="sorting">
+              <div className="by-name" onClick={() => this.props.sortByName() }>by name</div>
+              <div className="by-card-count" onClick={() => this.props.sortByCardCount() }>by # of cards</div>
+            </div>
     }
 
     return (
       <div className="set-list">
         <h2>Set List</h2>
-
         {noSetsMessaging}
+        {noSetsSorting}
 
         <Link to="/create-set" className="create-set">Create new set</Link>
 
-        <div className="sorting">
-          <div className="by-name" onClick={() => this.props.sortByName() }>by name</div>
-          <div className="by-card-count" onClick={() => this.props.sortByCardCount() }>by # of cards</div>
-        </div>
 
         <ul>
         {this.props.sets.map((set, index) => {
