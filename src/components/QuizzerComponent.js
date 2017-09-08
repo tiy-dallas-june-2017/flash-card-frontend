@@ -35,7 +35,6 @@ class QuizzerVisual extends React.Component {
   retakeQuiz() {
     console.log('props', this.props);
     this.props.getSet(this.props.match.params.setId);
-    // this.props.history.push('/set/' + this.props.match.params.setId + '/quizzer');
   }
 
   backToSetList() {
