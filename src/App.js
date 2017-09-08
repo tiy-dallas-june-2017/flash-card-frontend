@@ -30,6 +30,7 @@ export default class App extends Component {
                 <Route path="/set/:setId/newcard" component={CardEditorComponent} />
                 <Route path="/set/:setId/quizzer" component={QuizzerComponent} />
                 <Route path="/set/:setId/edit" component={SetEditorComponent} />
+                <Route path="/set/:setId/cardedit/:cardId" component={CardEditorComponent} />
               </div>
             </div>
             <footer>
