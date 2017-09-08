@@ -21,6 +21,7 @@ let UserData = {
         store.dispatch(action);
 
         userData = data;
+        console.log('DATA STORED');
         cb(data)
       });
   },
@@ -56,7 +57,7 @@ let UserData = {
     .then(() => cb());
   },
 
-  editSet(setId, name, description, cb) {
+  editSet: (setId, name, description, cb) => {
 
     const url = `${URL}/api/sets/${setId}`;
     const newObject = {
@@ -70,7 +71,7 @@ let UserData = {
       })
     };
 
-    fetch(url, newObject).then(cb());
+    fetch(url, newObject).then(() => cb());
   },
 
   deleteSet: (setId, cb) => {
@@ -104,10 +105,16 @@ let UserData = {
 
   deleteSingleCard: (setId, cardId, cb) => {
 
-    fetch(`${URL}/api/sets/${setId}/card/${cardId}`, {
-      method: 'PUT'
-    })
-    .then(() => cb());
+    const url = `${URL}/api/sets/${setId}/card/${cardId}`;
+    const newObject = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    }
+
+    fetch(url, newObject).then(() => cb());
 
   },
 

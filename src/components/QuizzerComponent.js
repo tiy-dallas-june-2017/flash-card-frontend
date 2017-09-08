@@ -12,7 +12,7 @@ const CardNavigation = (props) => {
       <div className="correct" onClick={() => { props.markCorrect(props.currentCard);} }>Correct</div>
       <div className="incorrect" onClick={() => { props.markIncorrect(props.currentCard);} }>Incorrect</div>
       <div className="skip" onClick={props.skip}>Skip</div>
-      <div className='quit-quiz' onClick={() => {props.quitQuiz(props.currentCard)}}>Quit Quiz</div>
+      <div className='quit-quiz' onClick={props.quitQuiz}>Quit Quiz</div>
     </div>
   );
 }
@@ -32,7 +32,13 @@ class QuizzerVisual extends React.Component {
     this.props.getSet();
   }
 
+  retakeQuiz() {
+    console.log('props', this.props);
+    this.props.getSet(this.props.match.params.setId);
+  }
+
   backToSetList() {
+    console.log('props', this.props);
     this.props.history.push('/');
   }
 
@@ -74,7 +80,7 @@ class QuizzerVisual extends React.Component {
         skipped={this.props.quizzer.skippedCount} />
 
       summaryNavigation = <div className="summary-choices">
-          <div>Quiz again</div>
+          <div onClick={() => this.retakeQuiz()}>Quiz again</div>
           <div onClick={() => this.backToSetList()}>Back to set list</div>
         </div>;
     }
@@ -114,13 +120,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     skip: () => {
-      console.log('skip');
       const action = { type: 'SKIP_CARD' };
       dispatch(action);
     },
 
     quitQuiz: () => {
-      console.log('quit');
+      ownProps.history.push('/');
     },
 
     getSet: () => {
@@ -130,7 +135,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       };
 
       UserData.getSet(ownProps.match.params.setId, cb);
-    }
+    },
+
   }
 }
 
