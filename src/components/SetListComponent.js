@@ -12,9 +12,20 @@ class SetListVisual extends React.Component {
   }
 
   render() {
+    console.log('props', this.props);
+
     var noSetsMessaging;
     if (this.props.sets.length === 0) {
       noSetsMessaging = <p>You do not have any sets! Create one.</p>
+    }
+
+    let sortingClass;
+    if (this.props.sortedByName === true) {
+      sortingClass = 'sorting sorting-by-name';
+    } else if (this.props.sortedByName === false) {
+      sortingClass = 'sorting sorting-by-card-count';
+    } else {
+      sortingClass = 'sorting';
     }
 
 
@@ -26,9 +37,9 @@ class SetListVisual extends React.Component {
 
         <Link to="/create-set" className="create-set">Create new set</Link>
 
-        <div className="sorting">
-          <div className="by-name" onClick={() => this.props.sortByName() }>by name</div>
-          <div className="by-card-count" onClick={() => this.props.sortByCardCount() }>by # of cards</div>
+        <div className={sortingClass}>
+          <div className="by-name" onClick={() => this.props.sortByName()}>by name</div>
+          <div className="by-card-count" onClick={() => this.props.sortByCardCount()}>by # of cards</div>
         </div>
 
         <ul>
@@ -62,6 +73,7 @@ const mapStateToProps = (state) => {
     sortBy: state.sets.sortSetsBy,
     editSet: state.sets.editSet,
     forceRerender: state.forceRerender,
+    sortedByName: state.sets.sortedByName
   }
 }
 
@@ -70,7 +82,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     sortByName: () => dispatch({ type: constants.CHANGE_SORT, sort: 'name' }),
     sortByCardCount: () => dispatch({ type: constants.CHANGE_SORT, sort: 'cardCount' }),
     loadSets: () => {
-      console.log('LOAD SETS');
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
     },
     addEditSet: (set) => {
