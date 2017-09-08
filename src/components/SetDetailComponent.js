@@ -9,8 +9,9 @@ class SetDetailVisual extends React.Component {
     this.props.getSet();
   }
 
-  deleteSingleCard(card, setId) {
-    const cb = this.props.history.goBack();
+  deleteSingleCard = (card, setId) => {
+    console.log('DELETE PROPS', this.props);
+    const cb = () => this.props.history.goBack();
     const cardId = card.id;
     UserData.deleteSingleCard(setId, cardId, cb)
   }
