@@ -11,36 +11,38 @@ class SetListVisual extends React.Component {
     this.props.loadSets();
   }
 
-  render() {
-    console.log('props', this.props);
 
+  render() {
+    var noSetsSorting;
     var noSetsMessaging;
     if (this.props.sets.length === 0) {
       noSetsMessaging = <p>You do not have any sets! Create one.</p>
+      noSetsSorting = <p></p>
+    } else {
+      let sortingClass;
+      if (this.props.sortedByName === true) {
+        sortingClass = 'sorting sorting-by-name';
+      } else if (this.props.sortedByName === false) {
+        sortingClass = 'sorting sorting-by-card-count';
+      } else {
+        sortingClass = 'sorting';
+      }
+      noSetsSorting = <div className={sortingClass}>
+        <div className="by-name" onClick={() => this.props.sortByName()}>by name</div>
+        <div className="by-card-count" onClick={() => this.props.sortByCardCount()}>by # of cards</div>
+      </div>
     }
 
-    let sortingClass;
-    if (this.props.sortedByName === true) {
-      sortingClass = 'sorting sorting-by-name';
-    } else if (this.props.sortedByName === false) {
-      sortingClass = 'sorting sorting-by-card-count';
-    } else {
-      sortingClass = 'sorting';
-    }
 
 
     return (
       <div className="set-list">
         <h2>Set List</h2>
 
-        {noSetsMessaging}
-
         <Link to="/create-set" className="create-set">Create new set</Link>
 
-        <div className={sortingClass}>
-          <div className="by-name" onClick={() => this.props.sortByName()}>by name</div>
-          <div className="by-card-count" onClick={() => this.props.sortByCardCount()}>by # of cards</div>
-        </div>
+        {noSetsMessaging}
+        {noSetsSorting}
 
         <ul>
         {this.props.sets.map((set, index) => {
