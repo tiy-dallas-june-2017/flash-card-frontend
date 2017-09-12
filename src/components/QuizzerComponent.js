@@ -125,7 +125,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     skip: () => {
-      const action = { type: 'SKIP_CARD' };
+      const action = { type: constants.SKIP_CARD };
       dispatch(action);
     },
 

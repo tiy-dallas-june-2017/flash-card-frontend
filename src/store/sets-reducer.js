@@ -6,6 +6,7 @@ const initialState = {
   setEditName: '',
   setEditDescription: '',
   editSet: { id: '', description: '', name: '', cards: [] },
+  editCard: { id: '', front: '', back: '' },
   sortedByName: ''
 }
 
@@ -30,10 +31,39 @@ const reducer = (state = initialState, action) => {
       const updateObject = { id: action.id };
       updateObject[fieldName] = action.value;
       return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
-    case 'UPDATE_DATA':
-      console.log('HELLO FROM UPDATE DATA');
-      const emptyEditObj = { id: '', description: '', name: '', cards: [] }
-      return Object.assign({}, state, { editSet: emptyEditObj });
+    case constants.UPDATE_DATA:
+      const editSet = { id: '', description: '', name: '' }
+      return Object.assign({}, state, { editSet });
+    case constants.ADD_EDIT_CARD:
+      let editCard = { id: action.card.id, front: action.card.front, back: action.card.back };
+      return Object.assign({}, state, { editCard });
+    case constants.CHANGE_CARD_INPUT:
+      const inputValue = action.value;
+      const inputType = action.input;
+      editCard = {};
+      editCard[inputType] = inputValue;
+      return Object.assign({}, state, { editCard: Object.assign({}, state.editCard, editCard) });
+    case constants.DELETE_CARD:
+      console.log('HELLO FROM THE DELETE CARD REDUCER FUNCTION');
+      let set = state.list.find((set) => {
+        return set.id === action.setId;
+      });
+      const indexOfSet = state.list.indexOf(set);
+      const card = set.cards.find((card) => {
+        return card.id === action.cardId;
+      });
+      let indexOfCard = set.cards.indexOf(card);
+      console.log('CARD INDEX IS ', indexOfCard, 'SET INDEX IS', indexOfSet);
+      set.cards.splice(indexOfCard, 1);
+      const newList = state.list.slice();
+      newList.splice(indexOfSet, 1, set);
+      return Object.assign({}, state, {list: newList});
+    case constants.POPULATE_EDIT_FORM:
+      let currentSet = state.list.find((set) => {
+        return set.id === action.setId;
+      });
+      console.log('THIS IS THE SET', currentSet);
+      return Object.assign({}, state, { editSet: currentSet });
     default:
       return state;
   }

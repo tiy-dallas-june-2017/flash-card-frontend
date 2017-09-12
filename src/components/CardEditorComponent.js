@@ -1,7 +1,10 @@
 import React from 'react';
 import UserData from './../UserData.js';
 
-export default class CardEditorComponent extends React.Component {
+import { connect } from 'react-redux';
+import constants from '../store/constants';
+
+class CardEditorComponent extends React.Component {
 
   submitCard(evt) {
     evt.preventDefault();
@@ -13,6 +16,16 @@ export default class CardEditorComponent extends React.Component {
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
   }
 
+  editCard = (evt) => {
+    evt.preventDefault();
+
+    var cb = () => {
+      this.props.history.goBack();
+    };
+
+    UserData.editCardOfSet(this.props.match.params.setId, this.props.match.params.cardId, this.frontInput.value, this.backInput.value, cb);
+  }
+
   submitAndAddAnotherCard(evt) {
     evt.preventDefault();
 
@@ -21,15 +34,32 @@ export default class CardEditorComponent extends React.Component {
       this.backInput.value = '';
     };
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
+
   }
 
   render() {
+    const cardEditing = this.props.match.params.cardId ? true : false;
+    console.log('Editing Card?', cardEditing);
+    console.log('THESE PROPS YO!', this.props);
     return <div className="card-editor">
       <h2>The Card Editor</h2>
 
-      <form>
-        <input placeholder="front" ref={(input) => {this.frontInput = input; }} />
-        <input placeholder="back" ref={(input) => {this.backInput = input; }} />
+      <form onSubmit={ cardEditing ? (evt) => this.editCard(evt) : (evt) => this.submitCard(evt) }>
+
+        <input
+          placeholder="front"
+          ref={(input) => {this.frontInput = input; }}
+          onChange={(evt) => this.props.handleInputChange(evt, 'front')}
+          value={this.props.editCard.front} />
+
+        <input
+          placeholder="back"
+          ref={(input) => {this.backInput = input; }}
+          onChange={(evt) => this.props.handleInputChange(evt, 'back')}
+          value={this.props.editCard.back} />
+
+        <button>Save</button>
+
       </form>
 
       <button onClick={(evt) => this.submitCard(evt)}>Save</button>
@@ -39,3 +69,20 @@ export default class CardEditorComponent extends React.Component {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    editCard: state.sets.editCard
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleInputChange: (evt, input) => {
+      const action = { type: constants.CHANGE_CARD_INPUT, value: evt.target.value ,input }
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardEditorComponent);

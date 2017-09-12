@@ -2,21 +2,48 @@ import React from 'react'
 import UserData from './../UserData.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import constants from '../store/constants';
 
 class SetDetailVisual extends React.Component {
 
   componentDidMount() {
-    this.props.getSet();
+    const setId = this.props.match.params.setId;
+    const cb = (thing) => {
+      console.log('THE SET ID IS', thing);
+    };
+    this.props.getSet(setId, cb);
+    // const doStuff = new Promise((resolve, reject) => {
+    //   this.props.getSet(setId);
+    //   if (true) {
+    //     resolve();
+    //   } else {
+    //     reject();
+    //   }
+    // });
+    // doStuff.then((data) => {
+    //   let setId = data;
+    //   console.log('set id', setId);
+    // });
+    // console.log('set', set);
+  }
+
+  editSingleCard = (card, setId) => {
+    console.log('clicked', card, setId, this.props);
+    const cb = () => this.props.history.goBack();
+    const cardId = card.id;
+    UserData.editSingleCard(setId, cardId, cb);
   }
 
   deleteSingleCard = (card, setId) => {
     console.log('DELETE PROPS', this.props);
-    const cb = () => this.props.history.goBack();
-    const cardId = card.id;
-    UserData.deleteSingleCard(setId, cardId, cb)
+    const cb = () => {}
+    let cardId = card.id;
+    UserData.deleteSingleCard(setId, cardId, cb);
+    this.props.deleteCard(cardId, setId);
   }
 
   render() {
+    console.log('HISTORY', this.props.history);
     let currentSet = this.props.sets.list.find((x) => x.id === this.props.match.params.setId);
     const setId = this.props.match.params.setId;
 
@@ -34,7 +61,7 @@ class SetDetailVisual extends React.Component {
           return <li key={card.id} className="card">
             <div className="front">{card.front}</div>
             <div className="back">{card.back}</div>
-            <button>Edit</button>
+            <Link onClick={() => this.props.updateEditCard(card)} to={`/set/${setId}/cardedit/${card.id}`}>Edit</Link>
             <div className="stats">Correct: {card.correctCount} Incorrect: {card.incorrectCount}</div>
             <button onClick={() => this.deleteSingleCard(card, setId)}>DESTROY</button>
           </li>
@@ -70,7 +97,8 @@ class SetDetailVisual extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    sets: state.sets
+    sets: state.sets,
+    list: state.sets.list
   }
 }
 
@@ -79,9 +107,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getSet: () => {
       UserData.getSet(ownProps.match.params.setId);
     },
-    deleteSingleCard: () => {
-        console.log('at dispatchtoprops delete card');
-        UserData.deleteSingleCard(ownProps.match.params.cardId);
+    deleteCard: (cardId, setId) => {
+      console.log('at dispatchtoprops delete card');
+      const action = { type: constants.DELETE_CARD, cardId, setId };
+      dispatch(action);
+      // UserData.deleteSingleCard(ownProps.match.params.cardId);
+    },
+    updateEditCard: (card) => {
+      console.log('update edit card yo', card);
+      const action = { type: constants.ADD_EDIT_CARD, card };
+      dispatch(action);
     }
   }
 }

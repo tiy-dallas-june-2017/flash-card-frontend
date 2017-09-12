@@ -5,6 +5,17 @@ import { connect } from 'react-redux';
 
 class SetEditorComponent extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    UserData.loadSets(() => {
+      // this.props.populateEditForm();
+      this.props.populateEditForm(this.props.match.params.setId);
+    });
+  }
+
   submitSet = (evt) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();
@@ -16,7 +27,6 @@ class SetEditorComponent extends React.Component {
     evt.preventDefault();
     console.log('editing set with the id of', setId);
     const cb = () => {
-      this.props.updateData();
       this.props.history.goBack();
     };
     UserData.editSet(setId, this.nameInput.value, this.descriptionInput.value, cb);
@@ -65,18 +75,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeInput: (evt, fieldName, setId) => {
       const action = { type: constants.CHANGE_INPUT, fieldName, value: evt.target.value, id: setId };
-      console.log(action);
       dispatch(action);
     },
-    editSetFunction: (evt, setId) => {
-      evt.preventDefault();
-      console.log('clicked');
-      console.log('editing set with the id of', setId);
-      const action = { type: 'EDIT_SET', setId }
+    populateEditForm: (setId) => {
+      console.log('yo from the populate edit form function');
+      const action = { type: constants.POPULATE_EDIT_FORM, setId };
+      dispatch(action);
     },
     updateData: () => {
-      console.log('UPDATE DATA');
-      const action = { type: 'UPDATE_DATA' };
+      const action = { type: constants.UPDATE_DATA };
       dispatch(action);
     }
   }
