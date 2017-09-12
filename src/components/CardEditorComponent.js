@@ -11,7 +11,6 @@ class CardEditorComponent extends React.Component {
 
     var cb = () => {
       this.props.history.goBack();
-      this.props.updateData();
     };
 
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
@@ -21,12 +20,10 @@ class CardEditorComponent extends React.Component {
     evt.preventDefault();
 
     var cb = () => {
-      this.props.updateData();
       this.props.history.goBack();
     };
 
     UserData.editCardOfSet(this.props.match.params.setId, this.props.match.params.cardId, this.frontInput.value, this.backInput.value, cb);
-    this.props.updateData();
   }
 
   submitAndAddAnotherCard(evt) {
@@ -83,11 +80,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleInputChange: (evt, input) => {
       const action = { type: constants.CHANGE_CARD_INPUT, value: evt.target.value ,input }
-      dispatch(action);
-    },
-    updateData: () => {
-      console.log('UPDATE DATA');
-      const action = { type: constants.UPDATE_DATA };
       dispatch(action);
     }
   }
