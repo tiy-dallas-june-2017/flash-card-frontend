@@ -2,6 +2,7 @@ import React from 'react';
 import UserData from './../UserData.js';
 
 import { connect } from 'react-redux';
+import constants from '../store/constants';
 
 class CardEditorComponent extends React.Component {
 
@@ -67,12 +68,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputChange: (evt, input) => {
-      const action = { type: 'CHANGE_CARD_INPUT', value: evt.target.value ,input }
+      const action = { type: constants.CHANGE_CARD_INPUT, value: evt.target.value ,input }
       dispatch(action);
     },
     updateData: () => {
       console.log('UPDATE DATA');
-      const action = { type: 'UPDATE_DATA' };
+      const action = { type: constants.UPDATE_DATA };
       dispatch(action);
     }
   }

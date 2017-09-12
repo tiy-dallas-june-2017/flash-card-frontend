@@ -2,6 +2,7 @@ import React from 'react'
 import UserData from './../UserData.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import constants from '../store/constants';
 
 class SetDetailVisual extends React.Component {
 
@@ -92,7 +93,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     updateEditCard: (card) => {
       console.log('update edit card yo', card);
-      const action = { type: 'ADD_EDIT_CARD', card };
+      const action = { type: constants.ADD_EDIT_CARD, card };
       dispatch(action);
     }
   }

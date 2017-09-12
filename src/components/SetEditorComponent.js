@@ -69,18 +69,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeInput: (evt, fieldName, setId) => {
       const action = { type: constants.CHANGE_INPUT, fieldName, value: evt.target.value, id: setId };
-      console.log(action);
       dispatch(action);
     },
-    editSetFunction: (evt, setId) => {
-      evt.preventDefault();
-      console.log('clicked');
-      console.log('editing set with the id of', setId);
-      const action = { type: 'EDIT_SET', setId }
-    },
     updateData: () => {
-      console.log('UPDATE DATA');
-      const action = { type: 'UPDATE_DATA' };
+      const action = { type: constants.UPDATE_DATA };
       dispatch(action);
     }
   }
