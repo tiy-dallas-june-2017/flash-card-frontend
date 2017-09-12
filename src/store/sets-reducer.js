@@ -6,6 +6,7 @@ const initialState = {
   setEditName: '',
   setEditDescription: '',
   editSet: { id: '', description: '', name: '', cards: [] },
+  editCard: { id: '', front: '', back: '' },
   sortedByName: ''
 }
 
@@ -32,8 +33,18 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
     case 'UPDATE_DATA':
       console.log('HELLO FROM UPDATE DATA');
-      const emptyEditObj = { id: '', description: '', name: '', cards: [] }
-      return Object.assign({}, state, { editSet: emptyEditObj });
+      const editSet = { id: '', description: '', name: '', cards: [] }
+      return Object.assign({}, state, { editSet });
+    case constants.ADD_EDIT_CARD:
+      console.log('HELLO FROM ADD EDIT CARD', action.card);
+      let editCard = { id: action.card.id, front: action.card.front, back: action.card.back };
+      return Object.assign({}, state, { editCard });
+    case constants.CHANGE_CARD_INPUT:
+      const inputValue = action.value;
+      const inputType = action.input;
+      editCard = {};
+      editCard[inputType] = inputValue;
+      return Object.assign({}, state, { editCard: Object.assign({}, state.editCard, editCard) });
     default:
       return state;
   }

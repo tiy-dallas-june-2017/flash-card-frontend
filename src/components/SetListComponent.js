@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
     },
     addEditSet: (set) => {
-      const action = { type: 'ADD_EDIT_SET', set };
+      const action = { type: constants.ADD_EDIT_SET, set };
       console.log('action=====================', action);
       dispatch(action);
     },

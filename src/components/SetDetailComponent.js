@@ -2,6 +2,7 @@ import React from 'react'
 import UserData from './../UserData.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import constants from '../store/constants';
 
 class SetDetailVisual extends React.Component {
 
@@ -9,11 +10,18 @@ class SetDetailVisual extends React.Component {
     this.props.getSet();
   }
 
+  editSingleCard = (card, setId) => {
+    console.log('clicked', card, setId, this.props);
+    const cb = () => this.props.history.goBack();
+    const cardId = card.id;
+    UserData.editSingleCard(setId, cardId, cb);
+  }
+
   deleteSingleCard = (card, setId) => {
     console.log('DELETE PROPS', this.props);
     const cb = () => this.props.history.goBack();
     const cardId = card.id;
-    UserData.deleteSingleCard(setId, cardId, cb)
+    UserData.deleteSingleCard(setId, cardId, cb);
   }
 
   render() {
@@ -34,7 +42,7 @@ class SetDetailVisual extends React.Component {
           return <li key={card.id} className="card">
             <div className="front">{card.front}</div>
             <div className="back">{card.back}</div>
-            <button>Edit</button>
+            <Link onClick={() => this.props.updateEditCard(card)} to={`/set/${setId}/cardedit/${card.id}`}>Edit</Link>
             <div className="stats">Correct: {card.correctCount} Incorrect: {card.incorrectCount}</div>
             <button onClick={() => this.deleteSingleCard(card, setId)}>DESTROY</button>
           </li>
@@ -80,8 +88,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       UserData.getSet(ownProps.match.params.setId);
     },
     deleteSingleCard: () => {
-        console.log('at dispatchtoprops delete card');
-        UserData.deleteSingleCard(ownProps.match.params.cardId);
+      console.log('at dispatchtoprops delete card');
+      UserData.deleteSingleCard(ownProps.match.params.cardId);
+    },
+    updateEditCard: (card) => {
+      console.log('update edit card yo', card);
+      const action = { type: constants.ADD_EDIT_CARD, card };
+      dispatch(action);
     }
   }
 }

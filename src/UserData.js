@@ -103,6 +103,27 @@ let UserData = {
     .then(() => UserData.loadSets(cb));
   },
 
+  editCardOfSet: (setId, cardId, front, back, cb) => {
+    console.log('HELLO FROM EDIT CARD OF SET');
+
+    const url = `${URL}/api/sets/${setId}/cardedit/${cardId}`;
+
+    const updateObject = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        setId: setId,
+        cardId: cardId,
+        front: front,
+        back: back
+      })
+    };
+
+    fetch(url, updateObject).then(() => cb());
+  },
+
   deleteSingleCard: (setId, cardId, cb) => {
 
     const url = `${URL}/api/sets/${setId}/card/${cardId}`;
