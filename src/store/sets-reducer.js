@@ -32,11 +32,9 @@ const reducer = (state = initialState, action) => {
       updateObject[fieldName] = action.value;
       return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
     case 'UPDATE_DATA':
-      console.log('HELLO FROM UPDATE DATA');
       const editSet = { id: '', description: '', name: '' }
       return Object.assign({}, state, { editSet });
     case constants.ADD_EDIT_CARD:
-      console.log('HELLO FROM ADD EDIT CARD', action.card);
       let editCard = { id: action.card.id, front: action.card.front, back: action.card.back };
       return Object.assign({}, state, { editCard });
     case constants.CHANGE_CARD_INPUT:

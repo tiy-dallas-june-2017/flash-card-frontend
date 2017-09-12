@@ -20,7 +20,6 @@ class SetEditorComponent extends React.Component {
     evt.preventDefault();
     console.log('editing set with the id of', setId);
     const cb = () => {
-      this.props.updateData();
       this.props.history.goBack();
     };
     UserData.editSet(setId, this.nameInput.value, this.descriptionInput.value, cb);
