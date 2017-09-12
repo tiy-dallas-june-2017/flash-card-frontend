@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 
 class SetEditorComponent extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   submitSet = (evt) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();

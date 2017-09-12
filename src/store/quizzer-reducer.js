@@ -32,10 +32,23 @@ const reducer = (state = initialState, action) => {
         correctCount: state.correctCount + 1
       });
     case constants.QUIZ_CARD_INCORRECT:
-      return Object.assign({}, state, {
-        currentCard: state.currentCard + 1,
-        incorrectCount: state.incorrectCount + 1
-      });
+      let cardsCopy = state.cards;
+      // console.log('copy', cardsCopy);
+      let cardsLeft = cardsCopy.length - state.currentCard;
+      console.log('cards left', cardsLeft);
+      if (cardsLeft <= 3) {
+        return Object.assign({}, state, {
+          currentCard: state.currentCard + 1,
+          incorrectCount: state.incorrectCount + 1,
+          cardsCopy: cardsCopy.push(state.cards[state.currentCard])
+        });
+      } else {
+        return Object.assign({}, state, {
+          currentCard: state.currentCard + 1,
+          incorrectCount: state.incorrectCount + 1,
+          cardsCopy: cardsCopy.splice(state.currentCard + 3, 0, state.cards[state.currentCard])
+        });
+      }
     case constants.SKIP_CARD:
       return Object.assign({}, state, {currentCard: state.currentCard + 1, skippedCount: state.skippedCount + 1});
     default:
