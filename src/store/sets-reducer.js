@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
     case 'UPDATE_DATA':
       console.log('HELLO FROM UPDATE DATA');
-      const editSet = { id: '', description: '', name: '', cards: [] }
+      const editSet = { id: '', description: '', name: '' }
       return Object.assign({}, state, { editSet });
     case constants.ADD_EDIT_CARD:
       console.log('HELLO FROM ADD EDIT CARD', action.card);
