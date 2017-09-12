@@ -29,6 +29,17 @@ class CardEditorComponent extends React.Component {
     this.props.updateData();
   }
 
+  submitAndAddAnotherCard(evt) {
+    evt.preventDefault();
+
+    var cb = () => {
+      this.frontInput.value = '';
+      this.backInput.value = '';
+    };
+    UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
+
+  }
+
   render() {
     const cardEditing = this.props.match.params.cardId ? true : false;
     console.log('Editing Card?', cardEditing);
@@ -53,6 +64,9 @@ class CardEditorComponent extends React.Component {
         <button>Save</button>
 
       </form>
+
+      <button onClick={(evt) => this.submitCard(evt)}>Save</button>
+      <button onClick={(evt) => this.submitAndAddAnotherCard(evt)}>Save This One and Add Another</button>
 
     </div>;
   }

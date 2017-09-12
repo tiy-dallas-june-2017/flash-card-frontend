@@ -6,7 +6,8 @@ const initialState = {
   setEditName: '',
   setEditDescription: '',
   editSet: { id: '', description: '', name: '', cards: [] },
-  editCard: { id: '', front: '', back: '' }
+  editCard: { id: '', front: '', back: '' },
+  sortedByName: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -16,12 +17,13 @@ const reducer = (state = initialState, action) => {
     case constants.CHANGE_SORT:
       let copy = state.list.slice();
       if (action.sort === 'name') {
-        copy.sort((a, b) => { return a.name > b.name; });
+        copy.sort((a, b) => { return a.name.toUpperCase() > b.name.toUpperCase(); });
+        return Object.assign({}, state, { list: copy, sortSetsBy: action.sort, sortedByName: true })
       }
       else {
         copy.sort((a, b) => { return a.cards.length < b.cards.length; });
+        return Object.assign({}, state, { list: copy, sortSetsBy: action.sort, sortedByName: false });
       }
-      return Object.assign({}, state, { list: copy, sortSetsBy: action.sort });
     case constants.ADD_EDIT_SET:
       return Object.assign({}, state, { editSet: action.set });
     case constants.CHANGE_INPUT:
