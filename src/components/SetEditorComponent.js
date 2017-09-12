@@ -9,6 +9,13 @@ class SetEditorComponent extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    UserData.loadSets(() => {
+      // this.props.populateEditForm();
+      this.props.populateEditForm(this.props.match.params.setId);
+    });
+  }
+
   submitSet = (evt) => {
     evt.preventDefault();
     const cb = () => this.props.history.goBack();
@@ -68,6 +75,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeInput: (evt, fieldName, setId) => {
       const action = { type: constants.CHANGE_INPUT, fieldName, value: evt.target.value, id: setId };
+      dispatch(action);
+    },
+    populateEditForm: (setId) => {
+      console.log('yo from the populate edit form function');
+      const action = { type: constants.POPULATE_EDIT_FORM, setId };
       dispatch(action);
     },
     updateData: () => {

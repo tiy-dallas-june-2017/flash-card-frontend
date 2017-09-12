@@ -45,7 +45,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { editCard: Object.assign({}, state.editCard, editCard) });
     case constants.DELETE_CARD:
       console.log('HELLO FROM THE DELETE CARD REDUCER FUNCTION');
-      const set = state.list.find((set) => {
+      let set = state.list.find((set) => {
         return set.id === action.setId;
       });
       const indexOfSet = state.list.indexOf(set);
@@ -58,6 +58,12 @@ const reducer = (state = initialState, action) => {
       const newList = state.list.slice();
       newList.splice(indexOfSet, 1, set);
       return Object.assign({}, state, {list: newList});
+    case constants.POPULATE_EDIT_FORM:
+      let currentSet = state.list.find((set) => {
+        return set.id === action.setId;
+      });
+      console.log('THIS IS THE SET', currentSet);
+      return Object.assign({}, state, { editSet: currentSet });
     default:
       return state;
   }
