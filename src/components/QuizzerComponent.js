@@ -54,11 +54,16 @@ class QuizzerVisual extends React.Component {
     var summary;
     var summaryNavigation;
 
+
     if (this.props.quizzer.cards !== undefined && this.props.quizzer.currentCard !== this.props.quizzer.cards.length) {
       var textToShow = this.state.showFront ? this.props.currentCard.front: this.props.currentCard.back;
 
       cardShower = <div>
         <div>Card count: {this.props.quizzer.cards.length}</div>
+        <div>Current card:
+        {this.props.quizzer.currentCard + 1}</div>
+        <div>Cards Left:
+        {this.props.quizzer.cards.length - this.props.quizzer.currentCard}</div>
         <div
           className="card"
           onClick={(evt) => { this.cardClicked(evt); }}>
