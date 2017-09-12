@@ -7,7 +7,24 @@ import constants from '../store/constants';
 class SetDetailVisual extends React.Component {
 
   componentDidMount() {
-    this.props.getSet();
+    const setId = this.props.match.params.setId;
+    const cb = (thing) => {
+      console.log('THE SET ID IS', thing);
+    };
+    this.props.getSet(setId, cb);
+    // const doStuff = new Promise((resolve, reject) => {
+    //   this.props.getSet(setId);
+    //   if (true) {
+    //     resolve();
+    //   } else {
+    //     reject();
+    //   }
+    // });
+    // doStuff.then((data) => {
+    //   let setId = data;
+    //   console.log('set id', setId);
+    // });
+    // console.log('set', set);
   }
 
   editSingleCard = (card, setId) => {
@@ -19,12 +36,14 @@ class SetDetailVisual extends React.Component {
 
   deleteSingleCard = (card, setId) => {
     console.log('DELETE PROPS', this.props);
-    const cb = () => this.props.history.goBack();
+    const cb = () => {}
     const cardId = card.id;
     UserData.deleteSingleCard(setId, cardId, cb);
+    this.props.deleteCard(cardId, setId);
   }
 
   render() {
+    console.log('HISTORY', this.props.history);
     let currentSet = this.props.sets.list.find((x) => x.id === this.props.match.params.setId);
     const setId = this.props.match.params.setId;
 
@@ -78,7 +97,8 @@ class SetDetailVisual extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    sets: state.sets
+    sets: state.sets,
+    list: state.sets.list
   }
 }
 
@@ -87,9 +107,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getSet: () => {
       UserData.getSet(ownProps.match.params.setId);
     },
-    deleteSingleCard: () => {
+    deleteCard: (cardId, setId) => {
       console.log('at dispatchtoprops delete card');
-      UserData.deleteSingleCard(ownProps.match.params.cardId);
+      const action = { type: constants.DELETE_CARD, cardId, setId };
+      dispatch(action);
+      // UserData.deleteSingleCard(ownProps.match.params.cardId);
     },
     updateEditCard: (card) => {
       console.log('update edit card yo', card);

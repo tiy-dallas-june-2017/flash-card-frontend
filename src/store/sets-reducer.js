@@ -31,7 +31,7 @@ const reducer = (state = initialState, action) => {
       const updateObject = { id: action.id };
       updateObject[fieldName] = action.value;
       return Object.assign({}, state, { editSet: Object.assign({}, state.editSet, updateObject) });
-    case 'UPDATE_DATA':
+    case constants.UPDATE_DATA:
       const editSet = { id: '', description: '', name: '' }
       return Object.assign({}, state, { editSet });
     case constants.ADD_EDIT_CARD:
@@ -43,6 +43,21 @@ const reducer = (state = initialState, action) => {
       editCard = {};
       editCard[inputType] = inputValue;
       return Object.assign({}, state, { editCard: Object.assign({}, state.editCard, editCard) });
+    case constants.DELETE_CARD:
+      console.log('HELLO FROM THE DELETE CARD REDUCER FUNCTION');
+      const set = state.list.find((set) => {
+        return set.id === action.setId;
+      });
+      const indexOfSet = state.list.indexOf(set);
+      const card = set.cards.find((card) => {
+        return card.id === action.cardId;
+      });
+      let indexOfCard = set.cards.indexOf(card);
+      console.log('CARD INDEX IS ', indexOfCard, 'SET INDEX IS', indexOfSet);
+      set.cards.splice(indexOfCard, 1);
+      const newList = state.list.slice();
+      newList.splice(indexOfSet, 1, set);
+      return Object.assign({}, state, {list: newList});
     default:
       return state;
   }
