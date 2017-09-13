@@ -153,6 +153,34 @@ footer {
   float: right;
   text-align: right; }
 
+.set-list .outer {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw; }
+
+.set-list .inner {
+  background: #fff;
+  border-radius: 10px;
+  width: 300px;
+  margin: 50vh 50vw;
+  padding: 20px;
+  position: absolute;
+  top: -110px;
+  left: -170px; }
+
+.set-list .option {
+  display: block;
+  width: 50%; }
+
+.set-list .inner h1 {
+  padding: 10px; }
+
+.set-list .hidden {
+  display: none; }
+
 .set-editor input {
   display: block; }
 
