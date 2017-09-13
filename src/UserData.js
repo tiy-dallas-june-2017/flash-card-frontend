@@ -121,7 +121,7 @@ let UserData = {
       })
     };
 
-    fetch(url, updateObject).then(() => cb());
+    fetch(url, updateObject).then(() => UserData.loadSets(cb));
   },
 
   deleteSingleCard: (setId, cardId, cb) => {

@@ -41,33 +41,38 @@ class CardEditorComponent extends React.Component {
 
   render() {
     const cardEditing = this.props.match.params.cardId ? true : false;
+    let formSubmitButton = cardEditing ?
+    <button onClick={(evt) => this.editCard(evt)}>Update</button>
+    :
+    <button onClick={(evt) => this.submitCard(evt)}>Save</button>
+
     console.log('Editing Card?', cardEditing);
     console.log('THESE PROPS YO!', this.props);
-    return <div className="card-editor">
-      <h2>The Card Editor</h2>
+    return (
+      <div className="card-editor">
+        <h2>The Card Editor</h2>
 
-      <form onSubmit={ cardEditing ? (evt) => this.editCard(evt) : (evt) => this.submitCard(evt) }>
+        <form onSubmit={ cardEditing ? (evt) => this.editCard(evt) : (evt) => this.submitCard(evt) }>
 
-        <input
-          placeholder="front"
-          ref={(input) => {this.frontInput = input; }}
-          onChange={(evt) => this.props.handleInputChange(evt, 'front')}
-          value={this.props.editCard.front} />
+          <input
+            placeholder="front"
+            ref={(input) => {this.frontInput = input; }}
+            onChange={(evt) => this.props.handleInputChange(evt, 'front')}
+            value={this.props.editCard.front} />
 
-        <input
-          placeholder="back"
-          ref={(input) => {this.backInput = input; }}
-          onChange={(evt) => this.props.handleInputChange(evt, 'back')}
-          value={this.props.editCard.back} />
+          <input
+            placeholder="back"
+            ref={(input) => {this.backInput = input; }}
+            onChange={(evt) => this.props.handleInputChange(evt, 'back')}
+            value={this.props.editCard.back} />
 
-        <button>Save</button>
+          {formSubmitButton}
+        </form>
 
-      </form>
+        <button onClick={(evt) => this.submitAndAddAnotherCard(evt)}>Save This One and Add Another</button>
 
-      <button onClick={(evt) => this.submitCard(evt)}>Save</button>
-      <button onClick={(evt) => this.submitAndAddAnotherCard(evt)}>Save This One and Add Another</button>
-
-    </div>;
+      </div>
+    );
   }
 
 }
