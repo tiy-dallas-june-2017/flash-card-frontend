@@ -11,6 +11,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  console.log('quizzer reducer running', action);
   switch (action.type) {
     case constants.START_QUIZ:
       let shuffledCards = _.shuffle(action.set.cards.slice(0));
@@ -36,19 +37,21 @@ const reducer = (state = initialState, action) => {
       let cardsCopy = state.cards;
       // console.log('copy', cardsCopy);
       let cardsLeft = cardsCopy.length - state.currentCard;
-      let incrementBy = action.card.hasBeenAnswered ? 1 : 0;
+      let incrementBy = action.card.hasBeenAnsweredIncorrectly ? 1 : 0;
       // console.log('cards left', cardsLeft);
       if (cardsLeft <= 3) {
+        console.log('less than three cards and increment by', incrementBy);
         return Object.assign({}, state, {
           currentCard: state.currentCard + 1,
-          wrong: state.wrong + 1,
+          // wrong: state.wrong + 1,
           cardsCopy: cardsCopy.push(state.cards[state.currentCard]),
           incorrectCount: state.incorrectCount + incrementBy
         });
       } else {
+        console.log('more than three cards and increment by ', incrementBy);
         return Object.assign({}, state, {
           currentCard: state.currentCard + 1,
-          wrong: state.wrong + 1,
+          // wrong: state.wrong + 1,
           cardsCopy: cardsCopy.splice(state.currentCard + 3, 0, state.cards[state.currentCard]),
           incorrectCount: state.incorrectCount + incrementBy
         });

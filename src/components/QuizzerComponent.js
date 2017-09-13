@@ -127,12 +127,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     markCorrect: (card) => {
       UserData.incrementCorrectCountOnCard(ownProps.match.params.setId, card.id);
       dispatch({ type: constants.QUIZ_CARD_CORRECT });
+      card.hasBeenAnsweredIncorrectly = false;
     },
 
     markIncorrect: (card) => {
       UserData.incrementIncorrectCountOnCard(ownProps.match.params.setId, card.id, () => {});
       dispatch({ type: constants.QUIZ_CARD_INCORRECT, card });
-      card.hasBeenAnswered = true;
+      if (card.hasBeenAnsweredIncorrectly) {
+        card.alreadyMarkedWrong = true;
+      } else {
+        card.alreadyMarkedWrong = false;
+      }
+      card.hasBeenAnsweredIncorrectly = true;
     },
 
     skip: () => {
