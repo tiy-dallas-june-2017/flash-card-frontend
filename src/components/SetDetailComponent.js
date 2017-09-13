@@ -12,19 +12,6 @@ class SetDetailVisual extends React.Component {
       console.log('THE SET ID IS', thing);
     };
     this.props.getSet(setId, cb);
-    // const doStuff = new Promise((resolve, reject) => {
-    //   this.props.getSet(setId);
-    //   if (true) {
-    //     resolve();
-    //   } else {
-    //     reject();
-    //   }
-    // });
-    // doStuff.then((data) => {
-    //   let setId = data;
-    //   console.log('set id', setId);
-    // });
-    // console.log('set', set);
   }
 
   editSingleCard = (card, setId) => {

@@ -11,7 +11,6 @@ class SetEditorComponent extends React.Component {
 
   componentDidMount() {
     UserData.loadSets(() => {
-      // this.props.populateEditForm();
       this.props.populateEditForm(this.props.match.params.setId);
     });
   }
@@ -50,13 +49,13 @@ class SetEditorComponent extends React.Component {
           placeholder="name"
           ref={(input) => { this.nameInput = input; }}
           onChange={(evt) => this.props.changeInput(evt, 'name', setId)}
-          value={this.props.editSet.name} />
+          value={this.props.currentSet.name} />
 
         <textarea
           placeholder="description"
           ref={(input) => { this.descriptionInput = input; }}
           onChange={(evt) => this.props.changeInput(evt, 'description', setId)}
-          value={this.props.editSet.description}></textarea>
+          value={this.props.currentSet.description}></textarea>
 
         <button>{isEditing ? 'Update' : 'Create'}</button>
       </form>
@@ -67,7 +66,7 @@ class SetEditorComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    editSet: state.sets.editSet
+    currentSet: state.sets.editSet
   }
 }
 
