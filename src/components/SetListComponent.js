@@ -3,14 +3,27 @@ import UserData from './../UserData.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { constants } from './../store/store.js';
+import QuizOptions from './quizOptions.js';
 
 
 class SetListVisual extends React.Component {
+
+  state = {
+    showForm: false,
+    setId: null
+  }
 
   componentDidMount() {
     this.props.loadSets();
   }
 
+  showQuizOptionsDiv = (setId) => {
+    console.log('setId', setId);
+    this.setState({
+      showForm: !this.state.showForm,
+      setId
+    });
+  }
 
   render() {
     var noSetsSorting;
@@ -46,7 +59,14 @@ class SetListVisual extends React.Component {
 
         <ul>
         {this.props.sets.map((set, index) => {
-          let quizButton = set.cards.length > 0 ? <div className="button quiz" onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div> : null;
+          let startQuiz;
+          if (set.cards.length > 10) {
+            startQuiz = <div className='button quiz' onClick={() => this.showQuizOptionsDiv(set.id)}>quiz</div>
+          } else if (set.cards.length > 0) {
+            startQuiz = <div className='button quiz' onClick={() => {this.props.navigateToQuiz(set.id)}}>quiz</div>
+          } else {
+            startQuiz = null;
+          }
           return (
             <li key={set.id} className="set">
               <div className="set-name">{set.name}</div>
@@ -58,11 +78,12 @@ class SetListVisual extends React.Component {
                 onClick={() => this.props.addEditSet(set)}>edit</Link>
               <div className="button delete-set" onClick={() => {this.props.deleteSet(set.id)}}>delete</div>
               <div className="button view-set" onClick={() => {this.props.viewSet(set.id)}}>view set</div>
-              {quizButton}
+              {startQuiz}
             </li>
           )
         })}
         </ul>
+        <QuizOptions toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
       </div>
     );
   }
@@ -98,7 +119,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       UserData.loadSets((data) => dispatch({ type: constants.LOAD_SETS, sets: data.sets }))
     }),
     viewSet: (setId) => ownProps.history.push('/set/' + setId),
-    navigateToQuiz: (setId) => ownProps.history.push('/set/' + setId + '/quizzer')
+    navigateToQuiz: (setId) => ownProps.history.push('/set/' + setId + '/quizzer'),
   }
 }
 
