@@ -14,6 +14,7 @@ class CardEditorComponent extends React.Component {
     };
 
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
+    this.props.clearEditCard();
   }
 
   editCard = (evt) => {
@@ -24,6 +25,7 @@ class CardEditorComponent extends React.Component {
     };
 
     UserData.editCardOfSet(this.props.match.params.setId, this.props.match.params.cardId, this.frontInput.value, this.backInput.value, cb);
+    this.props.clearEditCard();
   }
 
   submitAndAddAnotherCard(evt) {
@@ -34,7 +36,7 @@ class CardEditorComponent extends React.Component {
       this.backInput.value = '';
     };
     UserData.addCardToSet(this.props.match.params.setId, this.frontInput.value, this.backInput.value, cb);
-
+    this.props.clearEditCard();
   }
 
   render() {
@@ -80,6 +82,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleInputChange: (evt, input) => {
       const action = { type: constants.CHANGE_CARD_INPUT, value: evt.target.value ,input }
+      dispatch(action);
+    },
+    clearEditCard: () => {
+      const action = { type: constants.CLEAR_EDIT_CARD };
       dispatch(action);
     }
   }

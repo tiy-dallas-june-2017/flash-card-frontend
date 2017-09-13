@@ -66,6 +66,8 @@ const reducer = (state = initialState, action) => {
         currentSet = state.editSet;
       }
       return Object.assign({}, state, { editSet: currentSet });
+    case constants.CLEAR_EDIT_CARD:
+      return Object.assign({}, state, { editCard: { id: '', front: '', back: '' } });
     default:
       return state;
   }
