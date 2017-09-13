@@ -83,7 +83,7 @@ class SetListVisual extends React.Component {
           )
         })}
         </ul>
-        <QuizOptions toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
+        <QuizOptions navigate={() => this.props.navigateToQuiz(this.state.setId)} toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
       </div>
     );
   }

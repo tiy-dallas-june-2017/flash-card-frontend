@@ -10,7 +10,7 @@ export default class QuizOptions extends React.Component {
         <div className='inner'>
           <div className='close' onClick={this.props.toggleForm}>&times;</div>
           <h1>Start new quiz</h1>
-          <div className='button option'>random</div>
+          <div className='button option' onClick={this.props.navigate}>random</div>
           <div className='button option'>new cards</div>
           <div className='button option'>cards I don't know</div>
         </div>
