@@ -28,10 +28,12 @@ let UserData = {
 
   getSet: (setId, cb) => {
 
+
     let callback = cb || noop;
 
     var setExists = () => {
       var set = userData.sets.find((x) => { return x.id === setId});
+      console.log('function running', set);
       callback(set);
     };
 

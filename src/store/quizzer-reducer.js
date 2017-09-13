@@ -6,7 +6,8 @@ const initialState = {
   correctCount: 0,
   incorrectCount: 0,
   skippedCount: 0,
-  cards: []
+  cards: [],
+  set: {}
 };
 
 const reducer = (state = initialState, action) => {
