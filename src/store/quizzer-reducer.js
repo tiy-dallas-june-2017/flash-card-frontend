@@ -36,18 +36,21 @@ const reducer = (state = initialState, action) => {
       let cardsCopy = state.cards;
       // console.log('copy', cardsCopy);
       let cardsLeft = cardsCopy.length - state.currentCard;
+      let incrementBy = action.card.hasBeenAnswered ? 1 : 0;
       // console.log('cards left', cardsLeft);
       if (cardsLeft <= 3) {
         return Object.assign({}, state, {
           currentCard: state.currentCard + 1,
           wrong: state.wrong + 1,
-          cardsCopy: cardsCopy.push(state.cards[state.currentCard])
+          cardsCopy: cardsCopy.push(state.cards[state.currentCard]),
+          incorrectCount: state.incorrectCount + incrementBy
         });
       } else {
         return Object.assign({}, state, {
           currentCard: state.currentCard + 1,
           wrong: state.wrong + 1,
-          cardsCopy: cardsCopy.splice(state.currentCard + 3, 0, state.cards[state.currentCard])
+          cardsCopy: cardsCopy.splice(state.currentCard + 3, 0, state.cards[state.currentCard]),
+          incorrectCount: state.incorrectCount + incrementBy
         });
       }
     case constants.SKIP_CARD:

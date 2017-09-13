@@ -49,6 +49,16 @@ class QuizzerVisual extends React.Component {
   }
 
   render() {
+
+    let cardIndex = this.props.quizzer.currentCard;
+
+    // if (this.props.quizzer.cards[cardIndex].hasBeenAnswered === undefined) {
+    //   this.props.quizzer.cards[cardIndex].hasBeenAnswered = false;
+    // } else if (this.props.quizzer.cards[cardIndex].hasBeenAnswered === false) {
+    //   this.props.quizzer.cards[cardIndex].hasBeenAnswered = true;
+    // }
+
+    console.log('QUIZZER PROPS', this.props);
     var cardShower;
     var cardNavigation;
     var summary;
@@ -121,7 +131,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     markIncorrect: (card) => {
       UserData.incrementIncorrectCountOnCard(ownProps.match.params.setId, card.id, () => {});
-      dispatch({ type: constants.QUIZ_CARD_INCORRECT });
+      dispatch({ type: constants.QUIZ_CARD_INCORRECT, card });
+      card.hasBeenAnswered = true;
     },
 
     skip: () => {
