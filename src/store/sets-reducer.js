@@ -62,6 +62,9 @@ const reducer = (state = initialState, action) => {
       let currentSet = state.list.find((set) => {
         return set.id === action.setId;
       });
+      if (currentSet === undefined) {
+        currentSet = state.editSet;
+      }
       return Object.assign({}, state, { editSet: currentSet });
     default:
       return state;
