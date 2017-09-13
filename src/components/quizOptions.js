@@ -1,12 +1,23 @@
 import React from 'react';
 
 export default class QuizOptions extends React.Component {
-  render() {
 
+  state = {
+    showForm: true
+  }
+
+  closeQuizOptionsDiv = () => {
+    this.setState({
+      showForm: false
+    })
+  }
+
+  render() {
     console.log('props', this.props);
     return (
       <div className={this.props.showForm ? 'outer' : 'hidden'}>
         <div className='inner'>
+          <div className='close' onClick={this.props.toggleForm}>x</div>
           <h1>Start new quiz</h1>
           <div className='button option'>random</div>
           <div className='button option'>new cards</div>

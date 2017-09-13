@@ -20,7 +20,7 @@ class SetListVisual extends React.Component {
   showQuizOptionsDiv = (setId) => {
     console.log('setId', setId);
     this.setState({
-      showForm: true,
+      showForm: !this.state.showForm,
       setId
     });
   }
@@ -83,7 +83,7 @@ class SetListVisual extends React.Component {
           )
         })}
         </ul>
-        <QuizOptions showForm={this.state.showForm} setId={this.state.setId}/>
+        <QuizOptions toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
       </div>
     );
   }

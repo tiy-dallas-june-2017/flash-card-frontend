@@ -181,6 +181,9 @@ footer {
 .set-list .hidden {
   display: none; }
 
+.set-list .close {
+  float: right; }
+
 .set-editor input {
   display: block; }
 
