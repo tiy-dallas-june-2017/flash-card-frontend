@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import UserData from '../UserData';
+import constants from '../store/constants';
 
 class QuizOptions extends React.Component {
 
-  cardsIDontKnow = (setId) => {
+  cardsIDontKnow = (setId, navigateToQuiz) => {
+    let set;
+    let troublesomeCards;
     const cb = (set) => {
-      let troublesomeCards = set.cards.filter((card) => {
+      set = set;
+      troublesomeCards = set.cards.filter((card) => {
         return (card.correctCount / (card.correctCount + card.incorrectCount) < .7);
       })
       console.log('Troublesome Cards Array', troublesomeCards);
     }
     UserData.getSet(setId, (cb));
+    this.props.startTroublesomeQuiz(set, troublesomeCards, navigateToQuiz, setId);
   }
 
   render() {
@@ -23,7 +28,7 @@ class QuizOptions extends React.Component {
           <h1>Start new quiz</h1>
           <div className='button option' onClick={this.props.navigate}>random</div>
           <div className='button option'>new cards</div>
-          <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId)}>cards I don't know</div>
+          <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigate)}>cards I don't know</div>
         </div>
       </div>
     )
@@ -40,7 +45,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     printSet: (setId) => console.log(setId),
-
+    startTroublesomeQuiz: (set, cards, navigateToQuiz, setId) => {
+      const action = { type: constants.START_QUIZ, set: undefined, cards };
+      dispatch(action);
+      // console.log('set', set);
+      navigateToQuiz(setId);
+    }
   }
 }
 

@@ -12,9 +12,14 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   console.log('quizzer reducer running', action);
+  console.log('type of cards', action.cards);
   switch (action.type) {
     case constants.START_QUIZ:
-      let shuffledCards = _.shuffle(action.set.cards.slice(0));
+      let shuffledCards = action.set !== undefined ? _.shuffle(action.set.cards.slice(0))
+       :
+      _.shuffle(action.cards.slice(0));
+      console.log('SHUFFLED CARDS', shuffledCards);
+      // let shuffledCards = _.shuffle(action.set.cards.slice(0));
       var sliceEnd = 10;
       if (shuffledCards.length < 10) {
         sliceEnd = shuffledCards.length;
