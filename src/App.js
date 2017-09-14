@@ -8,6 +8,7 @@ import SetEditorComponent from './components/SetEditorComponent.js';
 import SetDetailComponent from './components/SetDetailComponent.js';
 import CardEditorComponent from './components/CardEditorComponent.js';
 import QuizzerComponent from './components/QuizzerComponent.js';
+import TroublesomeCardsQuizzer from './components/TroublesomeCardsQuizzer';
 
 import './scss/start.css';
 
@@ -28,7 +29,8 @@ export default class App extends Component {
                 <Route path="/create-set" component={SetEditorComponent} />
                 <Route path="/set/:setId" exact component={SetDetailComponent} />
                 <Route path="/set/:setId/newcard" component={CardEditorComponent} />
-                <Route path="/set/:setId/quizzer" component={QuizzerComponent} />
+                <Route path="/set/:setId/quizzer/troublesomeCards" component={TroublesomeCardsQuizzer} />
+                <Route exact path="/set/:setId/quizzer" component={QuizzerComponent} />
                 <Route path="/set/:setId/edit" component={SetEditorComponent} />
                 <Route path="/set/:setId/cardedit/:cardId" component={CardEditorComponent} />
               </div>

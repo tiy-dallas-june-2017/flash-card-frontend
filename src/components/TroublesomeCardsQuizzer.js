@@ -152,11 +152,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
     getSet: () => {
       const cb = (set) => {
-        let troublesomeCards = set.cards.filter((card) => {
-          return (card.correctCount / (card.correctCount + card.incorrectCount) < .7);
-        })
-        console.log('Troublesome Cards Array', troublesomeCards);
-        const action = { type: constants.START_QUIZ, set: set, troublesomeCards };
+        // let set;
+        let troublesomeCards;
+        // const cb = (set) => {
+          // set = set;
+          troublesomeCards = set.cards.filter((card) => {
+            return (card.correctCount / (card.correctCount + card.incorrectCount) < .7);
+          })
+          console.log('Troublesome Cards Array', troublesomeCards);
+        // }
+
+        const action = { type: constants.START_TROUBLESOME_QUIZ, set: set, cards: troublesomeCards };
         dispatch(action);
       };
 
