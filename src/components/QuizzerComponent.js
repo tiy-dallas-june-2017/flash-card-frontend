@@ -29,7 +29,10 @@ class QuizzerVisual extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSet();
+    console.log('CDM', this.props.match);
+    if(this.props.match.url.indexOf('troublesomecards') === -1 && this.props.match.url.indexOf('newcards') === -1) {
+      this.props.getSet();
+    }
   }
 
   retakeQuiz() {
@@ -49,6 +52,17 @@ class QuizzerVisual extends React.Component {
   }
 
   render() {
+
+    let cardIndex = this.props.quizzer.currentCard;
+
+    // if (this.props.quizzer.cards[cardIndex].hasBeenAnswered === undefined) {
+    //   this.props.quizzer.cards[cardIndex].hasBeenAnswered = false;
+    // } else if (this.props.quizzer.cards[cardIndex].hasBeenAnswered === false) {
+    //   this.props.quizzer.cards[cardIndex].hasBeenAnswered = true;
+    // }
+
+    console.log('QUIZZER PROPS', this.props.quizzer);
+    console.log('cards length', this.props.quizzer.cards.length);
     var cardShower;
     var cardNavigation;
     var summary;
@@ -56,6 +70,7 @@ class QuizzerVisual extends React.Component {
 
 
     if (this.props.quizzer.cards !== undefined && this.props.quizzer.currentCard !== this.props.quizzer.cards.length) {
+      console.log('running');
       var textToShow = this.state.showFront ? this.props.currentCard.front: this.props.currentCard.back;
 
       cardShower = <div>
@@ -117,11 +132,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     markCorrect: (card) => {
       UserData.incrementCorrectCountOnCard(ownProps.match.params.setId, card.id);
       dispatch({ type: constants.QUIZ_CARD_CORRECT });
+      card.hasBeenAnsweredIncorrectly = false;
     },
 
     markIncorrect: (card) => {
       UserData.incrementIncorrectCountOnCard(ownProps.match.params.setId, card.id, () => {});
-      dispatch({ type: constants.QUIZ_CARD_INCORRECT });
+      dispatch({ type: constants.QUIZ_CARD_INCORRECT, card });
+      if (card.hasBeenAnsweredIncorrectly) {
+        card.alreadyMarkedWrong = true;
+      } else {
+        card.alreadyMarkedWrong = false;
+      }
+      card.hasBeenAnsweredIncorrectly = true;
     },
 
     skip: () => {

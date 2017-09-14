@@ -28,10 +28,12 @@ let UserData = {
 
   getSet: (setId, cb) => {
 
+
     let callback = cb || noop;
 
     var setExists = () => {
       var set = userData.sets.find((x) => { return x.id === setId});
+      console.log('function running', set);
       callback(set);
     };
 
@@ -153,15 +155,9 @@ let UserData = {
       }
     });
 
-    if (card.wrong === undefined) {
-      card.wrong = 0;
-    }
-
-    card.wrong += 1;
-    if (card.wrong === 2) {
+    if (card.alreadyMarkedWrong === false) {
       card.incorrectCount += 1;
     }
-
 
     return fetch(`${URL}/api/sets/${setId}/card/${position}/incorrect`, {
       method: 'POST'
