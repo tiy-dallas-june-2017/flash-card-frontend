@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import UserData from '../UserData';
 import constants from '../store/constants';
+import { Link } from 'react-router-dom';
 
 class QuizOptions extends React.Component {
 
@@ -28,7 +29,10 @@ class QuizOptions extends React.Component {
           <h1>Start new quiz</h1>
           <div className='button option' onClick={this.props.navigate}>random</div>
           <div className='button option'>new cards</div>
-          <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigate)}>cards I don't know</div>
+          <Link
+            className="button option"
+            onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigate)}
+            to={`/set/${this.props.setId}/quizzer/troublesomeCards`}>cards I don't know</Link>
         </div>
       </div>
     )
@@ -46,7 +50,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     printSet: (setId) => console.log(setId),
     startTroublesomeQuiz: (set, cards, navigateToQuiz, setId) => {
-      const action = { type: constants.START_QUIZ, set: undefined, cards };
+      const action = { type: constants.START_TROUBLESOME_QUIZ, set: undefined, cards };
+      console.log('THE ACTION BEFORE DISATCH IS', action);
       dispatch(action);
       // console.log('set', set);
       navigateToQuiz(setId);

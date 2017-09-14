@@ -83,7 +83,10 @@ class SetListVisual extends React.Component {
           )
         })}
         </ul>
-        <QuizOptions navigate={() => this.props.navigateToQuiz(this.state.setId)} toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
+        <QuizOptions
+          navigate={() => this.props.navigateToQuiz(this.state.setId)}
+          navigateToTroublesomeQuiz={() => this.props.navigateToTroublesomeQuiz(this.state.setId)}
+          toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
       </div>
     );
   }
@@ -120,6 +123,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }),
     viewSet: (setId) => ownProps.history.push('/set/' + setId),
     navigateToQuiz: (setId) => ownProps.history.push('/set/' + setId + '/quizzer'),
+    navigateToTroublesomeQuiz: (setId) => ownProps.history.push('/set/' + setId + '/quizzer/troublesomeCards'),
   }
 }
 
