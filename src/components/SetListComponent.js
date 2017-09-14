@@ -83,7 +83,7 @@ class SetListVisual extends React.Component {
           )
         })}
         </ul>
-        <QuizOptions navigateToTrouble={() => this.props.navigateToTrouble(this.state.setId)} navigateToQuiz={() => this.props.navigateToQuiz(this.state.setId)} toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
+        <QuizOptions navigateToTrouble={() => this.props.navigateToTrouble(this.state.setId)} navigateToQuiz={() => this.props.navigateToQuiz(this.state.setId)} navigateToNewCards={() => this.props.navigateToNewCards(this.state.setId)} toggleForm={this.showQuizOptionsDiv} showForm={this.state.showForm} setId={this.state.setId}/>
       </div>
     );
   }
@@ -120,7 +120,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }),
     viewSet: (setId) => ownProps.history.push('/set/' + setId),
     navigateToQuiz: (setId) => ownProps.history.push('/set/' + setId + '/quizzer'),
-    navigateToTrouble: (setId) => ownProps.history.push('/set/troublesomecards/' + setId + '/quizzer')
+    navigateToTrouble: (setId) => ownProps.history.push('/set/troublesomecards/' + setId + '/quizzer'),
+    navigateToNewCards: (setId) => ownProps.history.push('/set/newcards/' + setId + '/quizzer')
   }
 }
 

@@ -12,16 +12,23 @@ class QuizOptions extends React.Component {
       set = set;
       troublesomeCards = set.cards.filter((card) => {
         return (card.correctCount / (card.correctCount + card.incorrectCount) < .7);
-      })
-      console.log('Troublesome Cards Array', troublesomeCards);
+      });
     }
     UserData.getSet(setId, (cb));
-    this.props.startTroublesomeQuiz(set, troublesomeCards, navigateToQuiz, setId);
-    console.log('cb', cb);
-    console.log('set', set);
-    console.log('troublesomeCards', troublesomeCards);
-    console.log('navigateToQuiz', navigateToQuiz);
-    console.log('setId', setId);
+    this.props.startAnotherQuiz(set, troublesomeCards, navigateToQuiz, setId);
+  }
+
+  newCards = (setId, navigateToQuiz) => {
+    let set;
+    let unseenCards;
+    const cb = (set) => {
+      set = set;
+      unseenCards = set.cards.filter((card) => {
+        return (card.correctCount + card.incorrectCount < 10);
+      });
+    }
+    UserData.getSet(setId, (cb));
+    this.props.startAnotherQuiz(set, unseenCards, navigateToQuiz, setId);
   }
 
   render() {
@@ -32,7 +39,7 @@ class QuizOptions extends React.Component {
           <div className='close' onClick={this.props.toggleForm}>&times;</div>
           <h1>Start new quiz</h1>
           <div className='button option' onClick={this.props.navigateToQuiz}>random</div>
-          <div className='button option'>new cards</div>
+          <div className='button option' onClick={() => this.newCards(this.props.setId, this.props.navigateToNewCards)}>new cards</div>
           <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigateToTrouble)}>cards I don't know</div>
         </div>
       </div>
@@ -50,7 +57,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     printSet: (setId) => console.log(setId),
-    startTroublesomeQuiz: (set, cards, navigateToQuiz, setId) => {
+    startAnotherQuiz: (set, cards, navigateToQuiz, setId) => {
       const action = { type: constants.START_QUIZ, cards };
       dispatch(action);
       console.log('set', set);

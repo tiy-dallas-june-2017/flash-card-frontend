@@ -30,7 +30,7 @@ class QuizzerVisual extends React.Component {
 
   componentDidMount() {
     console.log('CDM', this.props.match);
-    if(this.props.match.url.indexOf('troublesomecards') === -1) {
+    if(this.props.match.url.indexOf('troublesomecards') === -1 && this.props.match.url.indexOf('newcards') === -1) {
       this.props.getSet();
     }
   }
