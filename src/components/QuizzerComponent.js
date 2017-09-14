@@ -29,7 +29,10 @@ class QuizzerVisual extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSet();
+    console.log('CDM', this.props.match);
+    if(this.props.match.url.indexOf('troublesomecards') === -1) {
+      this.props.getSet();
+    }
   }
 
   retakeQuiz() {
@@ -58,7 +61,8 @@ class QuizzerVisual extends React.Component {
     //   this.props.quizzer.cards[cardIndex].hasBeenAnswered = true;
     // }
 
-    console.log('QUIZZER PROPS', this.props);
+    console.log('QUIZZER PROPS', this.props.quizzer);
+    console.log('cards length', this.props.quizzer.cards.length);
     var cardShower;
     var cardNavigation;
     var summary;
@@ -66,6 +70,7 @@ class QuizzerVisual extends React.Component {
 
 
     if (this.props.quizzer.cards !== undefined && this.props.quizzer.currentCard !== this.props.quizzer.cards.length) {
+      console.log('running');
       var textToShow = this.state.showFront ? this.props.currentCard.front: this.props.currentCard.back;
 
       cardShower = <div>

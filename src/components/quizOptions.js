@@ -17,6 +17,11 @@ class QuizOptions extends React.Component {
     }
     UserData.getSet(setId, (cb));
     this.props.startTroublesomeQuiz(set, troublesomeCards, navigateToQuiz, setId);
+    console.log('cb', cb);
+    console.log('set', set);
+    console.log('troublesomeCards', troublesomeCards);
+    console.log('navigateToQuiz', navigateToQuiz);
+    console.log('setId', setId);
   }
 
   render() {
@@ -26,9 +31,9 @@ class QuizOptions extends React.Component {
         <div className='inner'>
           <div className='close' onClick={this.props.toggleForm}>&times;</div>
           <h1>Start new quiz</h1>
-          <div className='button option' onClick={this.props.navigate}>random</div>
+          <div className='button option' onClick={this.props.navigateToQuiz}>random</div>
           <div className='button option'>new cards</div>
-          <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigate)}>cards I don't know</div>
+          <div className='button option' onClick={() => this.cardsIDontKnow(this.props.setId, this.props.navigateToTrouble)}>cards I don't know</div>
         </div>
       </div>
     )
@@ -46,9 +51,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     printSet: (setId) => console.log(setId),
     startTroublesomeQuiz: (set, cards, navigateToQuiz, setId) => {
-      const action = { type: constants.START_QUIZ, set: undefined, cards };
+      const action = { type: constants.START_QUIZ, cards };
       dispatch(action);
-      // console.log('set', set);
+      console.log('set', set);
       navigateToQuiz(setId);
     }
   }

@@ -16,8 +16,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.START_QUIZ:
       let shuffledCards = action.set !== undefined ? _.shuffle(action.set.cards.slice(0))
-       :
-      _.shuffle(action.cards.slice(0));
+       : _.shuffle(action.cards.slice(0));
       console.log('SHUFFLED CARDS', shuffledCards);
       // let shuffledCards = _.shuffle(action.set.cards.slice(0));
       var sliceEnd = 10;
